@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <link rel="stylesheet" href="{% static 'main/css/semuabuku.css' %}" />
+{% endblock meta %}
+
+
+{% block content %}
+
+<div class="container" style="margin-top:0px;margin-bottom:0px">
+    <div class = "row">
+        <div class = "col-4" style="padding-right:0">
+            <h4><strong>Karya Pengguna</strong></h4>
+            <div id = "carouselindicator" class = "carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                    {% for karya in karya %}
+                        {% if forloop.counter0 < 5 %}
+                            {% if forloop.counter0 == 0 %}
+                                <button id="indikatorlingkaran" type="button" data-bs-target="#carouselindicator" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            {% else %}
+                                <button id="indikatorlingkaran" type="button" data-bs-target="#carouselindicator" data-bs-slide-to="{{forloop.counter0}}" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <div class="carousel-inner">
+                    {% for karya in karya %}
+                        {% if forloop.counter0 < 5 %}
+                            {% if forloop.counter0 == 0 %}
+                                
+                                <div class="carousel-item active">
+                                    <a href = "{% url 'main:show_preview_kreasi' karya.pk %}">
+                                    <button class="buttonbuku">
+                                        <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
+                                        <div class="penampungjudul">
+                                            <ul>
+                                                <li id = "cover"><Strong id = "cover">{{karya.judul}}</Strong></li>
+                                                <li id = "cover">{{karya.penulis}}</li>
+                                            </ul>  
+                                        </div>
+                                    </button>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="carousel-item">
+                                    <a href = "{% url 'main:show_preview_kreasi' karya.pk %}">
+                                    <button class="buttonbuku">
+                                        <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
+                                        <div class="penampungjudul">
+                                            <ul>
+                                                <li id = "cover"><Strong id = "cover">{{karya.judul}}</Strong></li>
+                                                <li id = "cover">{{karya.penulis}}</li>
+                                            </ul>                                            
+                                        </div>
+                                    </button>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {% for karya in karya %}
+                        {% if forloop.counter0 < 5 %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselindicator" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselindicator" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>   
+            </div>
+        </div>
+        <div class = "col-8" style="padding-right: 70px;padding-left: 90px;">
+            <div>
+                <h5><strong>Koleksi Buku</strong><br/><br/></h5>
+            </div>
+            <div class = "row gx-5" id = "untukbuku">
+                {% for buku in bukus %}
+                    {% if forloop.counter0 < 4 %}
+                        <div class="col-3">
+                            <div class="card" id="sampulkecil">
+                                <a href ="{% url 'main:show_preview' buku.pk %}">
+                                    <button class="buttonbukukecil">                                    
+                                        <img src="{{buku.gambar}}" id="sampulbuku" alt="...">
+                                        <div class="penampungjudul">
+                                            <ul class="smallfont">
+                                                <li id = "coverkecil"><Strong id = "coverkecil">{{buku.judul}}</Strong></li>
+                                                <li id = "coverkecil">{{buku.penulis}}</li>
+                                            </ul>  
+                                        </div>
+                                    </button>                                
+                                </a>
+                            </div>
+                        </div>
+                    {%endif %}
+                {% endfor %}
+                <div class = "row" style="padding-top:15px;padding-right:  0px; margin-right: 0px;">
+                    <a href = "{% url 'main:show_semua' %}" align=right style="padding:0px;">
+                        <button  align=right style="background-color: #240000;border-radius: 20px;color:whitesmoke">Lihat Semua</button>
+                    </a>
+                </div>
+            </div>
+            <div class = "row" id = "untukkatabijak" >
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 30vh;max-height: 30vh;">                    
+                    <div id="akandiajax" class="carousel-inner" style="max-height: 30vh;height: 30vh;">
+                        {% for kata in kata_bijak %}
+                            {% if forloop.counter0 == 0 %}
+                                <div class="carousel-item active" style="max-height: 30vh;height: 30vh;">
+                                    <p style="overflow-y: auto;">{{kata.kata_kata}}</p>
+                                    <p>~{{kata.pengguna}}</p>
+                                </div>
+                            {% else %}
+                                <div class="carousel-item" style="max-height: 30vh;height: 30vh;">
+                                    <p style="overflow-y: scroll;">{{kata.kata_kata}}</p>
+                                    <p>~{{kata.pengguna}}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-4" align ="right">
+                <a href="{% url 'main:show_my_quotes' %}"  align=right>
+                    <button align = right style="height: 30px; width: 200px; border-radius: 20px;background-color: #240000;color: whitesmoke;">Quotes Saya</button>
+                </a>
+                </div>
+                <div class="col-4">
+                    {% if user.is_authenticated %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height: 30px; width: 200px; border-radius: 20px;background-color: #240000;color: whitesmoke;border: none;">Buat Quotes</button>
+                    {% else %}
+                    <a href="{% url 'main:login' %}"  align=right>
+                        <button align = right style="height: 30px; width: 200px; border-radius: 20px;background-color: #240000;color: whitesmoke;">Buat Quotes</button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="quotes" class="col-form-label">Quotes Anda:</label>
+                        <textarea class="form-control" id="quotes" name="quotes"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Buat quotes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="Url" data-url="{% url 'main:add_quotes_ajax' %}" />
+<input type="hidden" id="Urlpalsu" data-url="{% url 'main:get_quotes_json' %}" />
+<script type="text/JavaScript" src="{% static 'main/js/main.js' %}">
+</script>
+{% endblock content %}

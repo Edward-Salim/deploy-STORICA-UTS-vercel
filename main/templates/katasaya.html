@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<link rel="stylesheet" href="{% static 'main/css/quotes.css' %}" />
+{% endblock meta %}
+{% block content %}
+
+<div class="container" id="bungkus">
+  {% for kata in kata_saya %}
+  <div class="col-4" style="height: 100px;">
+    <br /><br>
+    <div class="card" style="height: 100px;padding:5px;border-radius: 12px;overflow: auto;">
+      <p>{{kata.kata_kata}}</p>
+      <a href="{% url 'main:delete_quotes' kata.pk %}">
+        <button id="tombol_hapus"
+          style="position: relative;right:-80%;bottom:-30px;width:70px;border-radius: 8px;border: none;background-color: rgb(24,0,0);color:whitesmoke; font-size:8px">Hapus
+          Quotes</button>
+      </a>
+    </div>
+  </div>
+
+  {% endfor %}
+
+</div>
+<input type="hidden" id="Urlpalsu" data-url="{% url 'main:get_quotes_json' %}" />
+<script type="text/JavaScript" src="{% static 'main/js/quotes.js' %}">
+</script>
+{% endblock content %}

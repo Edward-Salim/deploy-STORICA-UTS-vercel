@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <link rel="stylesheet" href="{% static 'main/css/semuabuku.css' %}" />
+{% endblock meta %}
+
+{% block content %}
+<div class="container" style="margin-top: 5px;">
+    <h4><strong>Cari Buku: </strong></h4>
+    <div class="row bx-5">
+    <div class="col-2">
+        <a href="{% url 'main:filter_empat' %}">
+        <button style = "text-align:left;background-color:#24000000;color:  rgb(24,0,0);width: 150px;height: 30px;border-radius: 20px;border-color: #240000;"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Rating (>4)</button>
+        </a>
+    </div>
+    <div class="col-2">
+        <a href="{% url 'main:filter_inggris' %}">
+        <button style = "text-align:left;background-color:#24000000;color:  rgb(24,0,0);width: 150px;height: 30px;border-radius: 20px;border-color: #240000;"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Bahasa (Inggris)</button>
+        </a>
+    </div>
+    <div class="col-2">
+        <a href="{% url 'main:filter_karya' %}">
+        <button style = "text-align:left;background-color:#24000000;color:  rgb(24,0,0);width: 150px;height: 30px;border-radius: 20px;border-color: #240000;"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Karya Pengguna</button>
+        </a>
+    </div>
+</div>
+    <br/><br/>
+    <div class="row gy-5">
+        {% for karya in karya %}
+            <div class="col-2">
+                <div class="card" id="sampulkecil">
+                    <a href ="{% url 'main:show_preview' karya.pk %}">
+                        <button class="buttonbukukecil">                                    
+                            <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
+                            <div class="penampungjudul">
+                                <ul class="smallfont">
+                                    <li id = "coverkecil"><Strong id = "coverkecil">{{karya.judul}}</Strong></li>
+                                    <li id = "coverkecil">{{karya.penulis}}</li>
+                                </ul>  
+                            </div>
+                        </button>                                
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for buku in bukus %}
+            <div class="col-2">
+                <div class="card" id="sampulkecil">
+                    <a href ="{% url 'main:show_preview' buku.pk %}">
+                        <button class="buttonbukukecil">                                    
+                            <img src="{{buku.gambar}}" id="sampulbuku" alt="...">
+                            <div class="penampungjudul">
+                                <ul class="smallfont">
+                                    <li id = "coverkecil"><Strong id = "coverkecil">{{buku.judul}}</Strong></li>
+                                    <li id = "coverkecil">{{buku.penulis}}</li>
+                                </ul>  
+                            </div>
+                        </button>                                
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div id ="kembalilagi">
+    <a style="align-self: center;"href = "{% url 'main:show_main' %}">
+        <button  class="tombolkembali">Kembali</button>
+    </a>
+    </div>
+</div>        
+    <script type="text/JavaScript" src="{% static 'main/js/semuabuku.js' %}"></script>
+{% endblock content %}

@@ -1,106 +1,56 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+<h1>README.md</h1>
 
-# Django + Vercel
+1. **Nama-nama anggota kelompok**
 
-This example shows how to use Django 4 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+   - Edward Salim - 2206024890
+   - Rakha Davin Bani Alamsyah - 2206082650
+   - Jason Kent Winata - 2206081313
+   - Nazkya Raahiil Ramandha - 2206030893
+   - Zaidan Naufal Ilmi - 2206081761
+     <br><br>
 
-## Demo
+2. **Cerita aplikasi yang diajukan serta manfaatnya**
 
-https://django-template.vercel.app/
+   Dalam rangka memperingati Bulan Bahasa dan Sastra yang diselenggarakan setiap bulan Oktober di Indonesia, yang menghormati kelahiran bahasa Indonesia, kami dengan bangga memperkenalkan aplikasi Storica. Storica dirancang dengan tujuan mulia: meningkatkan tingkat literasi di kalangan masyarakat Indonesia, sambil merayakan kekuatan kata-kata.
 
-## How it Works
+   Storica adalah wadah kreatif yang memungkinkan pengguna untuk mengekspresikan diri mereka melalui cerita-cerita yang mereka ciptakan, yang dapat diakses dan dinikmati oleh orang lain. Aplikasi ini sangat relevan mengingat tantangan literasi yang masih dihadapi oleh sebagian warga Indonesia.
 
-Our Django application, `example` is configured as an installed application in `vercel_app/settings.py`:
+   Dalam semangat Bulan Bahasa dan Sastra, Storica memberikan kesempatan kepada pengguna untuk memulai perjalanan literasi mereka dan mungkin merintis karir sebagai penulis yang berbakat. Semoga aplikasi ini tidak hanya menjadi perayaan bahasa Indonesia, tetapi juga membawa perubahan positif dalam literasi dan kepenulisan di Indonesia. Mari bersama-sama merayakan kekayaan bahasa dan sastra kita melalui Storica.<br><br>
 
-```python
-# vercel_app/settings.py
-INSTALLED_APPS = [
-    # ...
-    'example',
-]
-```
+3. **Daftar modul yang akan diimplementasikan**
 
-We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
+   - **Modul Auth / Landing Page (1, Kelompok):**
 
-```python
-# vercel_app/settings.py
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
-```
+     Ini akan memberikan akses awal ke aplikasi, dan pengguna akan melihat data buku dari API. Kami juga akan menyertakan opsi filter untuk seleksi modul berikutnya.
 
-The `wsgi` module must use a public variable named `app` to expose the WSGI application:
+   - **Modul Home Page (2, Zaidan):**
 
-```python
-# vercel_app/wsgi.py
-app = get_wsgi_application()
-```
+     Di sini, pengguna akan dapat melihat semua buku yang tersedia. Kami akan mencakup fitur untuk melacak capaian buku, dengan kemajuan yang ditandai setelah pengguna memilih tombol "Baca".
 
-The corresponding `WSGI_APPLICATION` setting is configured to use the `app` variable from the `vercel_app.wsgi` module:
+   - **Modul Saved Library (3, Nazkya):**
 
-```python
-# vercel_app/settings.py
-WSGI_APPLICATION = 'vercel_app.wsgi.app'
-```
+     Pengguna akan memiliki koleksi buku favorit mereka. Ini akan memungkinkan pengguna untuk menambahkan buku ke koleksi ini dengan mengidentifikasi buku berdasarkan ID, dan model pengguna akan diperbarui sesuai.
 
-There is a single view which renders the current time in `example/views.py`:
+   - **Modul Buat Cerita Baru (4, Davin):**
 
-```python
-# example/views.py
-from datetime import datetime
+     Di sini, pengguna dapat membuat cerita baru dan mengedit cerita yang ada. Kami akan menyertakan tombol untuk kembali ke halaman utama setelah menyelesaikan pembacaan.
 
-from django.http import HttpResponse
+   - **Modul Baca (5, Edward):**
 
+     Dalam modul ini, pengguna akan dapat menikmati membaca cerita yang ada. Setelah membaca, pengguna akan memiliki opsi untuk memberikan penilaian dan menyampaikan komentar terkait cerita tersebut, yang dapat dilihat oleh semua pengguna aplikasi.
 
-def index(request):
-    now = datetime.now()
-    html = f'''
-    <html>
-        <body>
-            <h1>Hello from Vercel!</h1>
-            <p>The current time is { now }.</p>
-        </body>
-    </html>
-    '''
-    return HttpResponse(html)
-```
+   - **Modul Preview Buku (6, Jason):**
 
-This view is exposed a URL through `example/urls.py`:
+     Dalam modul ini, pengguna akan memiliki kesempatan untuk melihat preview dan detail suatu buku. Mereka akan diberikan opsi untuk memilih antara tombol "Baca" atau "Favorit".<br><br>
 
-```python
-# example/urls.py
-from django.urls import path
+4. **Sumber dataset katalog buku**
 
-from example.views import index
+   - Goodreads-books (Kaggle): [https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks](https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks)<br><br>
 
+5. **Role atau peran pengguna beserta deskripsinya**
 
-urlpatterns = [
-    path('', index),
-]
-```
-
-Finally, it's made accessible to the Django server inside `vercel_app/urls.py`:
-
-```python
-# vercel_app/urls.py
-from django.urls import path, include
-
-urlpatterns = [
-    ...
-    path('', include('example.urls')),
-]
-```
-
-This example uses the Web Server Gateway Interface (WSGI) with Django to enable handling requests on Vercel with Serverless Functions.
-
-## Running Locally
-
-```bash
-python manage.py runserver
-```
-
-Your Django application is now available at `http://localhost:8000`.
-
-## One-Click Deploy
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+   - **Pengguna Guest:**
+     - Pengguna tamu hanya dapat mengakses halaman beranda dan melihat pratinjau buku.
+     - Untuk menggunakan fitur-fitur lainnya, pengguna diharuskan untuk melakukan login, karena akses ke fitur tersebut memerlukan otentikasi.
+   - **Pengguna Storica (Non-Guest):**
+     - Pengguna Storica yang sudah masuk ke akun mereka dapat mengakses semua fitur pada modul yang tersedia.
