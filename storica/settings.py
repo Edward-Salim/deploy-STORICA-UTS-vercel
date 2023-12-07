@@ -82,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'storica.wsgi.application'
+WSGI_APPLICATION = 'storica.wsgi.app'
 
 
 # Database
